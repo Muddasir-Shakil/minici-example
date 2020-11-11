@@ -13,8 +13,8 @@ script:
   - go test -v ./...
   # Build the code 
   - CGO_ENABLED=0 GOARCH=amd64 go build -o demo
-  
-- echo "$REGISTRY_PASSWORD" | docker login --username $REGISTRY_USER --password-stdin
+
+  - echo "$REGISTRY_PASSWORD" | docker login --username $REGISTRY_USER --password-stdin
 
   - docker build -f Dockerfile -t muddasir/demo:latest ./
 
