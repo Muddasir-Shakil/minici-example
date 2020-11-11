@@ -13,3 +13,13 @@ script:
   - go test -v ./...
   # Build the code 
   - CGO_ENABLED=0 GOARCH=amd64 go build -o demo
+  
+- echo "$REGISTRY_PASSWORD" | docker login --username $REGISTRY_USER --password-stdin
+
+  - docker build -f Dockerfile -t muddasir/demo:latest ./
+
+  - GIT_SHA="$(git rev-parse --short HEAD)"
+  - docker tag muddasir/demo:latest muddasir/demo:$GIT_SHA
+
+  - docker push muddasir/demo:latest
+  - docker push muddasir/demo:$GIT_SHA
